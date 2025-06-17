@@ -19,6 +19,7 @@ class RoutePullDownMenu extends StatelessWidget {
     required this.alignment,
     required this.animation,
     required this.scrollController,
+    this.showDividers = false,
   });
 
   /// Items to show in the menu.
@@ -38,6 +39,8 @@ class RoutePullDownMenu extends StatelessWidget {
 
   /// Is used to define the initial scroll offset of menu's body.
   final ScrollController? scrollController;
+
+  final bool showDividers;
 
   @override
   Widget build(BuildContext context) {
@@ -87,6 +90,7 @@ class RoutePullDownMenu extends StatelessWidget {
                   child: MenuBody(
                     scrollController: scrollController,
                     items: items,
+                    showDividers: showDividers,
                   ),
                 ),
               ),

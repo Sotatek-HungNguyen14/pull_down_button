@@ -57,6 +57,7 @@ class MenuBody extends StatefulWidget {
     super.key,
     required this.items,
     required this.scrollController,
+    this.showDividers = false,
   });
 
   /// Items to show in the menu.
@@ -65,6 +66,8 @@ class MenuBody extends StatefulWidget {
   /// A scroll controller that can be used to control the scrolling of the
   /// [items] in the menu.
   final ScrollController? scrollController;
+
+  final bool showDividers;
 
   @override
   State<MenuBody> createState() => _MenuBodyState();
@@ -94,7 +97,8 @@ class _MenuBodyState extends State<MenuBody> {
         clipBehavior: Clip.none,
         controller: _effectiveScrollController,
         child: ListBody(
-          children: MenuSeparator.wrapVerticalList(widget.items),
+          children: MenuSeparator.wrapVerticalList(widget.items,
+              showDividers: widget.showDividers),
         ),
       ),
     );

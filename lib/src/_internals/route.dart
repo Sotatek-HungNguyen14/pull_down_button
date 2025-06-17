@@ -27,6 +27,7 @@ class PullDownMenuRoute<VoidCallback> extends PopupRoute<VoidCallback> {
     required this.alignment,
     required this.menuOffset,
     required this.scrollController,
+    this.showDividers = false,
     required super.settings,
   });
 
@@ -68,6 +69,9 @@ class PullDownMenuRoute<VoidCallback> extends PopupRoute<VoidCallback> {
   /// [items] in the menu.
   final ScrollController? scrollController;
 
+  /// Whether to show dividers between items in the menu.
+  final bool showDividers;
+
   @override
   final String barrierLabel;
 
@@ -108,6 +112,7 @@ class PullDownMenuRoute<VoidCallback> extends PopupRoute<VoidCallback> {
         routeTheme: routeTheme,
         animation: animation,
         alignment: alignment,
+        showDividers: showDividers,
       ),
     );
   }

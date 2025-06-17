@@ -35,6 +35,7 @@ class PullDownMenu extends StatelessWidget {
     required this.items,
     this.scrollController,
     this.routeTheme,
+    this.showDividers = false,
   });
 
   /// Items to show in the menu.
@@ -62,6 +63,8 @@ class PullDownMenu extends StatelessWidget {
   ///
   /// If that's null, then [PullDownMenuRouteTheme.defaults] is used.
   final PullDownMenuRouteTheme? routeTheme;
+
+  final bool showDividers;
 
   @override
   Widget build(BuildContext context) {
@@ -93,6 +96,7 @@ class PullDownMenu extends StatelessWidget {
               child: MenuBody(
                 scrollController: scrollController,
                 items: items,
+                showDividers: showDividers,
               ),
             ),
           ),

@@ -18,12 +18,14 @@ class PullDownMenuActionsRow extends StatelessWidget
   const PullDownMenuActionsRow.small({
     super.key,
     required this.items,
+    this.showDividers = false,
   }) : _size = ElementSize.small;
 
   /// Creates a row of 3 actions at max; icon and short (one-worded) title.
   const PullDownMenuActionsRow.medium({
     super.key,
     required this.items,
+    this.showDividers = false,
   }) : _size = ElementSize.medium;
 
   /// The size of descendant [PullDownMenuItem]s.
@@ -35,6 +37,8 @@ class PullDownMenuActionsRow extends StatelessWidget
   /// [PullDownMenuActionsRow.small] and 3 for [PullDownMenuActionsRow.medium]
   /// to avoid icon and text overflows.
   final List<PullDownMenuItem> items;
+
+  final bool showDividers;
 
   /// Returns fixed height for [PullDownMenuItem] in [PullDownMenuActionsRow].
   double _height(BuildContext context) => switch (_size) {
@@ -75,7 +79,8 @@ class PullDownMenuActionsRow extends StatelessWidget
       child: ActionsRowSizeConfig(
         size: _size,
         child: Row(
-          children: MenuSeparator.wrapSideBySide(items),
+          children:
+              MenuSeparator.wrapSideBySide(items, showDividers: showDividers),
         ),
       ),
     );

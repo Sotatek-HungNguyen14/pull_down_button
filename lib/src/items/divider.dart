@@ -94,44 +94,38 @@ class MenuSeparator extends StatelessWidget implements PullDownMenuEntry {
 
   /// Helper method that simplifies separation of pull-down menu items.
   static List<PullDownMenuEntry> wrapVerticalList(
-    List<PullDownMenuEntry> items,
-  ) {
-    if (items.isEmpty || items.length == 1) {
+    List<PullDownMenuEntry> items, {
+    bool showDividers = false,
+  }) {
+    if (!showDividers || items.isEmpty || items.length == 1) {
       return items;
     }
-
     const divider = MenuSeparator._(axis: Axis.horizontal);
-
     final list = <PullDownMenuEntry>[];
-
     for (var i = 0; i < items.length - 1; i++) {
       final item = items[i];
-
       if (item is PullDownMenuDivider || items[i + 1] is PullDownMenuDivider) {
         list.add(item);
       } else {
         list.addAll([item, divider]);
       }
     }
-
     list.add(items.last);
-
     return list;
   }
 
   /// Helper method that simplifies separation of side-by-side appearance row
   /// items.
   static List<Widget> wrapSideBySide(
-    List<PullDownMenuItem> items,
-  ) {
-    if (items.isEmpty) {
+    List<PullDownMenuItem> items, {
+    bool showDividers = false,
+  }) {
+    if (!showDividers || items.isEmpty) {
       return items;
     } else if (items.length == 1) {
       return [Expanded(child: items.single)];
     }
-
     const divider = MenuSeparator._(axis: Axis.vertical);
-
     return [
       for (final i in items.take(items.length - 1)) ...[
         Expanded(child: i),

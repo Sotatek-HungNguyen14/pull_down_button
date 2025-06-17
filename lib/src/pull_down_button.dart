@@ -508,6 +508,7 @@ Future<void> showPullDownMenu({
   PullDownMenuRouteTheme? routeTheme,
   bool useRootNavigator = false,
   RouteSettings? routeSettings,
+  bool showDividers = false,
 }) async {
   if (items.isEmpty) return;
 
@@ -526,6 +527,7 @@ Future<void> showPullDownMenu({
     scrollController: scrollController,
     useRootNavigator: useRootNavigator,
     routeSettings: routeSettings,
+    showDividers: showDividers,
   );
 
   if (action != null) {
@@ -550,6 +552,7 @@ Future<VoidCallback?> _showMenu<VoidCallback>({
   required ScrollController? scrollController,
   required bool useRootNavigator,
   required RouteSettings? routeSettings,
+  bool showDividers = false,
 }) {
   final navigator = Navigator.of(context, rootNavigator: useRootNavigator);
 
@@ -570,6 +573,7 @@ Future<VoidCallback?> _showMenu<VoidCallback>({
       menuOffset: menuOffset,
       scrollController: scrollController,
       settings: routeSettings,
+      showDividers: showDividers,
     ),
   );
 }
