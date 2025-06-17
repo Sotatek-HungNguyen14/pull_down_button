@@ -13,6 +13,7 @@ class _PopupMenuRouteLayout extends SingleChildLayoutDelegate {
     required this.buttonRect,
     required this.menuPosition,
     required this.menuOffset,
+    this.menuVerticalOffset = 0,
   });
 
   final EdgeInsets padding;
@@ -20,6 +21,7 @@ class _PopupMenuRouteLayout extends SingleChildLayoutDelegate {
   final Rect buttonRect;
   final PullDownMenuPosition menuPosition;
   final double menuOffset;
+  final double menuVerticalOffset;
 
   @override
   BoxConstraints getConstraintsForChild(BoxConstraints constraints) {
@@ -74,7 +76,7 @@ class _PopupMenuRouteLayout extends SingleChildLayoutDelegate {
       menuPosition,
     );
 
-    return Offset(dx, dy);
+    return Offset(dx, dy + menuVerticalOffset);
   }
 
   @override

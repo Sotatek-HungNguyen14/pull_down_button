@@ -26,6 +26,7 @@ class PullDownMenuRoute<VoidCallback> extends PopupRoute<VoidCallback> {
     required this.itemsOrder,
     required this.alignment,
     required this.menuOffset,
+    this.menuVerticalOffset = 0,
     required this.scrollController,
     this.showDividers = false,
     required super.settings,
@@ -64,6 +65,9 @@ class PullDownMenuRoute<VoidCallback> extends PopupRoute<VoidCallback> {
 
   /// Is used to define additional on-side offset to the menu's final position.
   final double menuOffset;
+
+  /// Is used to define additional vertical offset to the menu's final position.
+  final double menuVerticalOffset;
 
   /// A scroll controller that can be used to control the scrolling of the
   /// [items] in the menu.
@@ -142,6 +146,7 @@ class PullDownMenuRoute<VoidCallback> extends PopupRoute<VoidCallback> {
             avoidBounds: avoidBounds,
             menuPosition: menuPosition,
             menuOffset: menuOffset,
+            menuVerticalOffset: menuVerticalOffset,
           ),
           child: capturedThemes.wrap(child),
         ),

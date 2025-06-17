@@ -212,6 +212,7 @@ class PullDownButton extends StatefulWidget {
     this.itemsOrder = PullDownMenuItemsOrder.downwards,
     this.buttonAnchor,
     this.menuOffset = 16,
+    this.menuVerticalOffset = 0,
     this.scrollController,
     this.animationBuilder = defaultAnimationBuilder,
     this.routeTheme,
@@ -274,6 +275,20 @@ class PullDownButton extends StatefulWidget {
   ///
   /// Defaults to 16px.
   final double menuOffset;
+
+  /// Additional vertical offset for the pull-down menu if the menu's desired
+  /// position is not in the central third of the screen.
+  ///
+  /// If the menu's desired position is in the bottom half of the screen,
+  /// [menuVerticalOffset] is added to said position (menu moves down). If the
+  /// menu's desired position is in the top half of the screen, [menuVerticalOffset]
+  /// is subtracted from said position (menu moves up).
+  ///
+  /// Consider using [buttonAnchor] if you want to offset the menu for a large
+  /// amount of px.
+  ///
+  /// Defaults to 0px.
+  final double menuVerticalOffset;
 
   /// A scroll controller that can be used to control the scrolling of the
   /// [itemBuilder] in the menu.
@@ -397,6 +412,10 @@ class _PullDownButtonState extends State<PullDownButton> {
       button = _anchorToButtonPart(context, button, widget.buttonAnchor!);
     }
 
+    if (widget.menuVerticalOffset != 0) {
+      button = button.translate(0, widget.menuVerticalOffset);
+    }
+
     final animationAlignment = widget.animationAlignmentOverride ??
         PullDownMenuRoute.animationAlignment(context, button);
 
@@ -418,6 +437,7 @@ class _PullDownButtonState extends State<PullDownButton> {
       hasLeading: hasLeading,
       animationAlignment: animationAlignment,
       menuOffset: widget.menuOffset,
+      menuVerticalOffset: widget.menuVerticalOffset,
       scrollController: widget.scrollController,
       useRootNavigator: widget.useRootNavigator,
       routeSettings: widget.routeSettings,
@@ -503,6 +523,7 @@ Future<void> showPullDownMenu({
   required Rect position,
   PullDownMenuItemsOrder itemsOrder = PullDownMenuItemsOrder.downwards,
   double menuOffset = 16,
+  double menuVerticalOffset = 0,
   ScrollController? scrollController,
   PullDownMenuCanceled? onCanceled,
   PullDownMenuRouteTheme? routeTheme,
@@ -514,16 +535,23 @@ Future<void> showPullDownMenu({
 
   final hasLeading = MenuConfig.menuHasLeading(items);
 
+  var positionRect = position;
+  if (menuVerticalOffset != 0) {
+    positionRect = positionRect.translate(0, menuVerticalOffset);
+  }
+
   final action = await _showMenu<VoidCallback>(
     context: context,
     items: items,
-    buttonRect: position,
+    buttonRect: positionRect,
     menuPosition: PullDownMenuPosition.automatic,
     itemsOrder: itemsOrder,
     routeTheme: routeTheme,
     hasLeading: hasLeading,
-    animationAlignment: PullDownMenuRoute.animationAlignment(context, position),
+    animationAlignment:
+        PullDownMenuRoute.animationAlignment(context, positionRect),
     menuOffset: menuOffset,
+    menuVerticalOffset: menuVerticalOffset,
     scrollController: scrollController,
     useRootNavigator: useRootNavigator,
     routeSettings: routeSettings,
@@ -549,6 +577,7 @@ Future<VoidCallback?> _showMenu<VoidCallback>({
   required bool hasLeading,
   required Alignment animationAlignment,
   required double menuOffset,
+  double menuVerticalOffset = 0,
   required ScrollController? scrollController,
   required bool useRootNavigator,
   required RouteSettings? routeSettings,
@@ -571,6 +600,7 @@ Future<VoidCallback?> _showMenu<VoidCallback>({
       itemsOrder: itemsOrder,
       alignment: animationAlignment,
       menuOffset: menuOffset,
+      menuVerticalOffset: menuVerticalOffset,
       scrollController: scrollController,
       settings: routeSettings,
       showDividers: showDividers,
